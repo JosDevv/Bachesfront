@@ -112,7 +112,7 @@ export class litAutocomplete extends LitElement {
     );
 
 
-    obtenerJSON("https://jsonplaceholder.typicode.com/users")
+    obtenerJSON("http://localhost:8080/bachestpi2022/resources/objetoestado")
     .then((json) => {
       console.log("el json de respuesta es:", json);
       this.items=json;
