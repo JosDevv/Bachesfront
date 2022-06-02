@@ -112,7 +112,7 @@ export class litAutocomplete extends LitElement {
     );
 
 
-    obtenerJSON("http://localhost:8080/bachestpi2022/resources/objeto")
+    obtenerJSON("http://localhost:9090/Baches/resources/objeto")
     .then((json) => {
       console.log("el json de respuesta es:", json);
       this.items=json;
