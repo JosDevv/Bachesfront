@@ -112,7 +112,7 @@ export class litAutocomplete extends LitElement {
     );
 
 
-    obtenerJSON("http://localhost:8080/bachestpi2022/resources/objetoestado")
+    obtenerJSON("http://localhost:8080/bachestpi2022/resources/objeto")
     .then((json) => {
       console.log("el json de respuesta es:", json);
       this.items=json;
@@ -215,7 +215,7 @@ export class litAutocomplete extends LitElement {
             this.items
               .filter(
                 item =>
-                  item.name
+                  item.nombre
                     .replace(",", "")
                     .replace(/\s/g, "")
                     .toLowerCase()
@@ -375,9 +375,9 @@ export class litAutocomplete extends LitElement {
           item => html`
             <li
               @click=${ev =>
-                this.autocomplete(item.name, item.value ? item.value : null)}
+                this.autocomplete(item.nombre, item.value ? item.value : null)}
             >
-              ${item.name}
+              ${item.nombre}
             </li>
           `
         )}
