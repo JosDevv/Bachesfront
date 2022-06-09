@@ -112,14 +112,7 @@ export class litAutocomplete extends LitElement {
     );
 
 
-    obtenerJSON("http://localhost:9090/Baches/resources/objeto")
-    .then((json) => {
-      console.log("el json de respuesta es:", json);
-      this.items=json;
-    })
-    .catch((err) => {
-      console.log("Error encontrado:", err);
-    });
+
 
 
 
@@ -206,6 +199,17 @@ export class litAutocomplete extends LitElement {
         this._highlightedEl && this._highlightedEl.click();
         break;
       default:
+        var busqueda=document.getElementById('busqueda');
+        console.log("http://localhost:9090/Baches/resources/estado/find?nombre="+busqueda.value);
+        obtenerJSON("http://localhost:9090/Baches/resources/estado/find?nombre="+busqueda.value)
+        .then((json) => {
+          console.log("el json de respuesta es:", json);
+          this.items=json;
+        })
+        .catch((err) => {
+          console.log("Error encontrado:", err);
+        });
+
         if (this.items.length) {
           var suggestions = [];
           var value = this.contentElement.value;
