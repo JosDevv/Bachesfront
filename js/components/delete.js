@@ -1,3 +1,4 @@
+
 const template = document.createElement('template');
 
 template.innerHTML = `
@@ -18,8 +19,8 @@ template.innerHTML = `
       cursor: pointer;
       outline: none;
 
-      width: 100%;
-      height: 40px;
+      width: 65px;
+      height: 30px;
 
       box-sizing: border-box;
       border: 1px solid #a1a1a1;
@@ -34,7 +35,8 @@ template.innerHTML = `
   </div>
 `;
 
-class Button extends HTMLElement {
+class ButtonDel extends HTMLElement {
+    
   constructor() {
     super();
 
@@ -42,11 +44,20 @@ class Button extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this.$button = this._shadowRoot.querySelector('button');
     this.$button.addEventListener('click', () => {
-      showUserCreateBox();
+        console.log(this.valueid);
+        userDelete(this.valueid);
+        
+        
     });
   }
   get label() {
     return this.getAttribute('label');
+  }
+  get valueid(){
+    return this.getAttribute('valueid');
+  }
+  set valueid(value){
+    this.setAttribute('valueid', value);    
   }
   set label(value) {
     this.setAttribute('label', value);
@@ -63,44 +74,24 @@ class Button extends HTMLElement {
   }
 }
 
-window.customElements.define('my-button', Button);
+window.customElements.define('my-button-del', ButtonDel);
 // modificar para nuestra api con respecto a los campos a enviar
 import {loadTable} from './mainForm.js';
-  function showUserCreateBox() {
-    Swal.fire({
-      title: 'Create user',
-      html:
-        
-        '<input id="name" class="swal2-input" placeholder="name">',
-      focusConfirm: false,
-      preConfirm: () => {
-        userCreate();
-      }
-    })
-  }
-  
-  function userCreate() {
-    
-    const name = document.getElementById("name").value;
-
-      
+function userDelete(id) {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/users");
+    xhttp.open("DELETE", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/users/"+id);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({ 
-      "name": name
+      "id": id
     }));
-    
     xhttp.onreadystatechange = function() {
-      console.log("hasta aca todo bien");
-      
+      if (this.readyState == 4) {
         const objects = JSON.parse(this.responseText);
-        console.log("agregado");
-        Swal.fire("agregado : "+name);
+        console.log("eliminado");
         loadTable();
-      
+        //Swal.fire(objects['message']);
+        
+      } 
     };
   }
-  
-  
-  
+ 
