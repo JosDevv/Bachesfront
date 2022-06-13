@@ -1,5 +1,8 @@
 //1.
-import { LitElement, html } from "https://unpkg.com/lit?module"
+import {
+  LitElement,
+  html
+} from "https://unpkg.com/lit?module"
 
 //2.
 const MAX_MATCHES = 15;
@@ -17,7 +20,7 @@ function obtenerJSON(url) {
         }
         reject(
           "No hemos podido recuperar ese json. El código de respuesta del servidor es: " +
-            response.status
+          response.status
         );
       })
       .then((json) => resolve(json))
@@ -30,8 +33,13 @@ export class litAutocomplete extends LitElement {
   static get properties() {
     return {
       //5
-      fulllist: { type: Array },
-      opened: { type: Boolean, reflect: true },
+      fulllist: {
+        type: Array
+      },
+      opened: {
+        type: Boolean,
+        reflect: true
+      },
       maxSuggestions: Number
     };
   }
@@ -50,9 +58,9 @@ export class litAutocomplete extends LitElement {
       .assignedNodes()[1];
 
     //10.
-    this._inputEl = slotInputList
-      ? slotInputList
-      : this.shadowRoot.getElementById("defaultInput");
+    this._inputEl = slotInputList ?
+      slotInputList :
+      this.shadowRoot.getElementById("defaultInput");
 
     //11.
     return this._inputEl;
@@ -84,6 +92,7 @@ export class litAutocomplete extends LitElement {
   //21.
   firstUpdated() {
     
+
     this._suggestionEl = this.shadowRoot.getElementById("suggestions");
     this._suggestionEl.style.width =
       this.contentElement.getBoundingClientRect().width + "px";
@@ -123,6 +132,7 @@ export class litAutocomplete extends LitElement {
   //24.
   updated(changed) {
     console.log("updated!!");
+    
     if (
       //25.
       changed.has("opened") &&
@@ -186,7 +196,7 @@ export class litAutocomplete extends LitElement {
         this._markPreviousElement();
         break;
 
-      //33.
+        //33.
       case "ArrowDown":
         ev.preventDefault();
         ev.stopPropagation();
@@ -194,57 +204,74 @@ export class litAutocomplete extends LitElement {
         this._markNextElement();
         break;
 
-      //34.
+        //34.
       case "Enter":
         this._highlightedEl && this._highlightedEl.click();
         break;
       default:
-        var busqueda=document.getElementById('busqueda');
-        console.log("http://localhost:9090/Baches/resources/estado/find?nombre="+busqueda.value);
-        obtenerJSON("http://localhost:9090/Baches/resources/estado/find?nombre="+busqueda.value)
-        .then((json) => {
-          console.log("el json de respuesta es:", json);
-          this.items=json;
-        })
-        .catch((err) => {
-          console.log("Error encontrado:", err);
-        });
+        var busqueda = document.getElementById('busqueda');
+        if (busqueda.value === "") {
 
-        if (this.items.length) {
-          var suggestions = [];
-          var value = this.contentElement.value;
+        } else {
+          console.log("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value);
+          obtenerJSON("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value)
+            .then((json) => {
+              console.log("el json de respuesta es:", json);
+              
+             
+                this.items.push(json);
+                //const clone=structuredClone(json);
+                this.lista(this.items);
+                
 
-          suggestions =
-            value &&
-            this.items
-              .filter(
-                item =>
-                  item.nombre
-                    .replace(",", "")
-                    .replace(/\s/g, "")
-                    .toLowerCase()
-                    .search(
-                      value
-                        .replace(",", "")
-                        .replace(/\s/g, "")
-                        .toLowerCase()
-                    ) != -1
-              )
+            })
+            .catch((err) => {
+              console.log("Error encontrado:", err);
+            });
+            console.log("fuera del json");
+               
 
-              //35.
-              .slice(0, this.maxSuggestions); // Limit results
-
-          //36.
-          if (suggestions.length === 0) {
-            suggestions = [];
-            suggestions.push({ value: null, text: "Sorry, No matches" });
-          }
-
-          this.suggest(suggestions);
+          //this.open();
+          
+         
         }
+
+        
     }
   }
+  lista(items){
+    if (true) {
+      var suggestions = [];
+      var value = this.contentElement.value;
 
+      suggestions =
+        value &&
+        items
+        .filter(
+          item =>
+          item.id_estado
+          
+          .search(
+            value
+            
+          ) != -1
+        )
+
+        //35.
+        .slice(0, this.maxSuggestions); // Limit results
+
+      //36.
+      if (suggestions.length === 0) {
+        suggestions = [];
+        suggestions.push({
+          value: null,
+          text: "Sorry, No matches"
+        });
+      }
+
+      this.suggest(suggestions);
+    }
+  }
   //37.
   _markPreviousElement() {
     if (!this._highlightedEl || !this._highlightedEl.previousElementSibling) {
@@ -270,6 +297,34 @@ export class litAutocomplete extends LitElement {
   //39.
   _onFocus(ev) {
     console.log("on focus!");
+    
+    var busqueda = document.getElementById('busqueda');
+    if (busqueda.value === "") {
+
+    } else {
+      console.log("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value);
+      obtenerJSON("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value)
+        .then((json) => {
+          console.log("el json de respuesta es:", json);
+          
+         
+            this.items.push(json);
+            //const clone=structuredClone(json);
+            this.lista(this.items);
+            
+
+        })
+        .catch((err) => {
+          console.log("Error encontrado:", err);
+        });
+        console.log("fuera del json");
+           
+
+      //this.open();
+      
+     
+    }
+
     this._blur = false;
     this._matches.length && this.open();
   }
@@ -307,6 +362,8 @@ export class litAutocomplete extends LitElement {
   //45.
   close() {
     console.log("close()");
+    this.items=[];
+    this.lista(this.items);
     this.opened = false;
     this._highlightedEl = null;
   }
@@ -328,7 +385,10 @@ export class litAutocomplete extends LitElement {
     //48.
     this.dispatchEvent(
       new CustomEvent("selected-autocomplete", {
-        detail: { value, text },
+        detail: {
+          value,
+          text
+        },
         composed: true,
         bubbles: true
       })
@@ -337,7 +397,7 @@ export class litAutocomplete extends LitElement {
 
   //49.
   render() {
-    return html`
+    return html `
       <style>
         ul {
           position: absolute;
@@ -379,9 +439,9 @@ export class litAutocomplete extends LitElement {
           item => html`
             <li
               @click=${ev =>
-                this.autocomplete(item.nombre, item.value ? item.value : null)}
+                this.autocomplete(item.id_estado, item.value ? item.value : null)}
             >
-              ${item.nombre}
+              ${item.id_estado}
             </li>
           `
         )}

@@ -71,7 +71,12 @@ import {loadTable} from './mainForm.js';
       title: 'Create user',
       html:
         
-        '<input id="name" class="swal2-input" placeholder="name">',
+        '<input id="name" class="swal2-input" placeholder="name">' +
+        '<input type="text" name="idEstado" id="idEstado" class="swal2-input" placeholder="1,2,3">' +
+        '<input id="idObjeto" class="swal2-input" placeholder="1,2,3">' +
+        '<input id="Actual" class="swal2-input" placeholder="true">' +
+        '<input id="Fecha" class="swal2-input" placeholder="01061999">' +
+        '<input id="Observaciones" class="swal2-input" placeholder="ya no esta">' ,
       focusConfirm: false,
       preConfirm: () => {
         userCreate();
