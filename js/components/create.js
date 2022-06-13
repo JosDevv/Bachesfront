@@ -93,16 +93,16 @@ import {loadTable} from './mainForm.js';
 
       
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/objeto_estado");
+    xhttp.open("POST", "http://localhost:9090/Baches/resources/objetoestado");
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({ 
-      "idEstado": idEstado, "idObjeto":idObjeto, "actual":actual, "fecha":fecha, "observaciones":observaciones
+      "idEstado": {"idEstado":idEstado}, "idObjeto":{"idObjeto":idObjeto}, "actual":actual, "fecha":fecha, "observaciones":observaciones
     }));
     
     xhttp.onreadystatechange = function() {
       console.log("hasta aca todo bien");
       
-        const objects = JSON.parse(this.responseText);
+        
         console.log("agregado");
         Swal.fire("agregado ");
         loadTable();
