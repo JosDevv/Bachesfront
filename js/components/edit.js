@@ -113,7 +113,7 @@ import {loadTable} from './mainForm.js';
     }));
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        const objects = JSON.parse(this.responseText);
+        //const objects = JSON.parse(this.responseText);
         console.log("editado");
         //Swal.fire(objects['message']);
         

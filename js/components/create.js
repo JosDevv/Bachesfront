@@ -74,7 +74,7 @@ import {loadTable} from './mainForm.js';
         '<input id="idEstado" class="swal2-input" placeholder="1,2,3">' +
         '<input id="idObjeto" class="swal2-input" placeholder="1,2,3">' +
         '<input id="actual" class="swal2-input" placeholder="true">' +
-        '<input id="fecha" class="swal2-input" placeholder="01061999">' +
+        '<input id="fechaAlcanzado" class="swal2-input" placeholder="01061999">' +
         '<input id="observaciones" class="swal2-input" placeholder="ya no esta">' ,
       focusConfirm: false,
       preConfirm: () => {
@@ -88,7 +88,7 @@ import {loadTable} from './mainForm.js';
     const idEstado = document.getElementById("idEstado").value;
     const idObjeto = document.getElementById("idObjeto").value;
     const actual = document.getElementById("actual").value;
-    const fecha = document.getElementById("fecha").value;
+    const fecha = document.getElementById("fechaAlcanzado").value;
     const observaciones = document.getElementById("observaciones").value;
 
       
@@ -96,7 +96,7 @@ import {loadTable} from './mainForm.js';
     xhttp.open("POST", "http://localhost:9090/Baches/resources/objetoestado");
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({ 
-      "idEstado": {"idEstado":idEstado}, "idObjeto":{"idObjeto":idObjeto}, "actual":actual, "fecha":fecha, "observaciones":observaciones
+      "idEstado": {"idEstado":idEstado}, "idObjeto":{"idObjeto":idObjeto}, "actual":actual, "fechaAlcanzado":fecha, "observaciones":observaciones
     }));
     
     xhttp.onreadystatechange = function() {
