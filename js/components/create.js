@@ -71,12 +71,11 @@ import {loadTable} from './mainForm.js';
       title: 'Create user',
       html:
         
-        '<input id="name" class="swal2-input" placeholder="name">' +
-        '<input type="text" name="idEstado" id="idEstado" class="swal2-input" placeholder="1,2,3">' +
+        '<input id="idEstado" class="swal2-input" placeholder="1,2,3">' +
         '<input id="idObjeto" class="swal2-input" placeholder="1,2,3">' +
-        '<input id="Actual" class="swal2-input" placeholder="true">' +
-        '<input id="Fecha" class="swal2-input" placeholder="01061999">' +
-        '<input id="Observaciones" class="swal2-input" placeholder="ya no esta">' ,
+        '<input id="actual" class="swal2-input" placeholder="true">' +
+        '<input id="fecha" class="swal2-input" placeholder="01061999">' +
+        '<input id="observaciones" class="swal2-input" placeholder="ya no esta">' ,
       focusConfirm: false,
       preConfirm: () => {
         userCreate();
@@ -86,14 +85,18 @@ import {loadTable} from './mainForm.js';
   
   function userCreate() {
     
-    const name = document.getElementById("name").value;
+    const idEstado = document.getElementById("idEstado").value;
+    const idObjeto = document.getElementById("idObjeto").value;
+    const actual = document.getElementById("actual").value;
+    const fecha = document.getElementById("fecha").value;
+    const observaciones = document.getElementById("observaciones").value;
 
       
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/users");
+    xhttp.open("POST", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/objeto_estado");
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({ 
-      "name": name
+      "idEstado": idEstado, "idObjeto":idObjeto, "actual":actual, "fecha":fecha, "observaciones":observaciones
     }));
     
     xhttp.onreadystatechange = function() {
@@ -101,7 +104,7 @@ import {loadTable} from './mainForm.js';
       
         const objects = JSON.parse(this.responseText);
         console.log("agregado");
-        Swal.fire("agregado : "+name);
+        Swal.fire("agregado ");
         loadTable();
       
     };
