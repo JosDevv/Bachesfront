@@ -35,7 +35,7 @@ class formularioInicial extends HTMLElement {
           trHTML += '<td>'+object.idEstado['idEstado']+'</td>';
           trHTML += '<td>'+object.idObjeto['idObjeto']+'</td>';
           trHTML += '<td>'+object['actual']+'</td>';
-          trHTML += '<td>'+object['fechaAlacanzado']+'</td>';
+          trHTML += '<td>'+object['fechaAlcanzado']+'</td>';
   
           trHTML += '<td>'+object['observaciones']+'</td>';
           trHTML += '<td><my-button-edit label="Edit" valueid='+object['idObjetoEstado']+'></my-button-edit>';
