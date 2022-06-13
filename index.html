@@ -22,22 +22,32 @@
 
     <div class="container">
       <div class="d-flex bd-highlight mb-3">
-        <div class="me-auto p-2 bd-highlight"><h2>Users</div>
+        <div class="me-auto p-2 bd-highlight"><h2>Objeto Estado</div>
+        
         <div class="p-2 bd-highlight">
           
           <my-button label="Create"></my-button>
          
         </div>
       </div>
+      <div>
+        <lit-autocomplete>
+        <input type="text" id="busqueda" name="busqueda" placeholder="search value" />
+  </nega-autocomplete>
 
+      </div>
       <div class="table-responsive">
         <table class="table">
           <thead>
             <tr>
                 <!-- cambiar para nuestra api -->
-              <th scope="col">1</th>
-              <th scope="col">2</th>
-
+              <th scope="col">IdObjetoEstado</th>
+              <th scope="col">IdEstado</th>
+              <th scope="col">IdObjeto</th>
+              <th scope="col">Actual</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">observaciones</th>
+              
             </tr>
           </thead>
           <tbody id="mytable">
