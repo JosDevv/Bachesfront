@@ -289,7 +289,7 @@ export class litAutocomplete extends LitElement {
         items
         .filter(
           item => 
-          item.idObjetoEstado+''
+          item.idEstado+''
           
           .search(
             value
@@ -454,9 +454,9 @@ export class litAutocomplete extends LitElement {
           item => html`
             <li
               @click=${ev =>
-                this.autocomplete(item.idObjetoEstado, item.value ? item.value : null)}
+                this.autocomplete(item.idEstado, item.value ? item.value : null)}
             >
-              ${item.idObjetoEstado}
+              ${item.idEstado}
             </li>
           `
         )}
