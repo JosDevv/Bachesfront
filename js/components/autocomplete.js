@@ -3,7 +3,7 @@ import {
   LitElement,
   html
 } from "https://unpkg.com/lit?module"
-
+import {loadTable} from './mainForm.js';
 //2.
 const MAX_MATCHES = 15;
 
@@ -27,6 +27,8 @@ function obtenerJSON(url) {
       .catch((err) => reject(err));
   });
 }
+
+
 
 //4.
 export class litAutocomplete extends LitElement {
@@ -67,7 +69,36 @@ export class litAutocomplete extends LitElement {
   }
 
   //12.
-
+  cargar(){
+    var busqueda = document.getElementById('busqueda');
+    if (busqueda.value === "") {
+      loadTable();
+      this.lista('');
+    } else {
+      console.log("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value);
+      obtenerJSON("http://localhost:8080/bachestpi2022/resources/objetoestado/findId?id=" + busqueda.value)
+        .then((json) => {
+          console.log("el json de respuesta es:", json);
+          
+         
+            this.items=json;
+            loadTable(json);
+            //const clone=structuredClone(json);
+            this.lista(this.items);
+            
+  
+        })
+        .catch((err) => {
+          console.log("Error encontrado:", err);
+        });
+        console.log("fuera del json");
+           
+  
+      //this.open();
+      
+     
+    }
+  }
   //14.
   constructor() {
     //15.
@@ -128,7 +159,7 @@ export class litAutocomplete extends LitElement {
 
 
   }
-
+  
   //24.
   updated(changed) {
     console.log("updated!!");
@@ -207,49 +238,58 @@ export class litAutocomplete extends LitElement {
         //34.
       case "Enter":
         this._highlightedEl && this._highlightedEl.click();
-        break;
-      default:
         var busqueda = document.getElementById('busqueda');
         if (busqueda.value === "") {
-
+          loadTable();
         } else {
           console.log("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value);
-          obtenerJSON("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value)
+          obtenerJSON("http://localhost:8080/bachestpi2022/resources/objetoestado/findId?id=" + busqueda.value)
             .then((json) => {
               console.log("el json de respuesta es:", json);
               
              
-                this.items.push(json);
+                this.items=json;
+                loadTable(json);
                 //const clone=structuredClone(json);
-                this.lista(this.items);
                 
-
+                
+      
             })
             .catch((err) => {
               console.log("Error encontrado:", err);
             });
             console.log("fuera del json");
                
-
+      
           //this.open();
           
          
         }
-
-        
+        //this.cargar();
+        //this.close();
+        break;
+      case "ArrowLeft":
+          console.log("izquierda");
+          break;
+      case "ArrowRight":
+          console.log("derecha");
+          break;
+      default:
+        this.cargar();
     }
   }
   lista(items){
     if (true) {
       var suggestions = [];
       var value = this.contentElement.value;
-
+      
+      
       suggestions =
         value &&
         items
         .filter(
-          item =>
-          item.id_estado
+          item => 
+          item.idObjetoEstado+''
           
           .search(
             value
@@ -298,32 +338,7 @@ export class litAutocomplete extends LitElement {
   _onFocus(ev) {
     console.log("on focus!");
     
-    var busqueda = document.getElementById('busqueda');
-    if (busqueda.value === "") {
-
-    } else {
-      console.log("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value);
-      obtenerJSON("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value)
-        .then((json) => {
-          console.log("el json de respuesta es:", json);
-          
-         
-            this.items.push(json);
-            //const clone=structuredClone(json);
-            this.lista(this.items);
-            
-
-        })
-        .catch((err) => {
-          console.log("Error encontrado:", err);
-        });
-        console.log("fuera del json");
-           
-
-      //this.open();
-      
-     
-    }
+    this.cargar();
 
     this._blur = false;
     this._matches.length && this.open();
@@ -439,9 +454,9 @@ export class litAutocomplete extends LitElement {
           item => html`
             <li
               @click=${ev =>
-                this.autocomplete(item.id_estado, item.value ? item.value : null)}
+                this.autocomplete(item.idObjetoEstado, item.value ? item.value : null)}
             >
-              ${item.id_estado}
+              ${item.idObjetoEstado}
             </li>
           `
         )}

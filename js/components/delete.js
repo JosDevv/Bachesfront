@@ -79,14 +79,12 @@ window.customElements.define('my-button-del', ButtonDel);
 import {loadTable} from './mainForm.js';
 function userDelete(id) {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/users/"+id);
+    xhttp.open("DELETE", "http://localhost:8080/bachestpi2022/resources/objetoestado/"+id);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send(JSON.stringify({ 
-      "id": id
-    }));
+    xhttp.send();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4) {
-        const objects = JSON.parse(this.responseText);
+        //const objects = JSON.parse(this.responseText);
         console.log("eliminado");
         loadTable();
         //Swal.fire(objects['message']);

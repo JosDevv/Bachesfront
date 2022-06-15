@@ -93,7 +93,7 @@ import {loadTable} from './mainForm.js';
 
       
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "http://localhost:9090/Baches/resources/objetoestado");
+    xhttp.open("POST", "http://localhost:8080/bachestpi2022/resources/objetoestado");
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({ 
       "idEstado": {"idEstado":idEstado}, "idObjeto":{"idObjeto":idObjeto}, "actual":actual, "fechaAlcanzado":fecha, "observaciones":observaciones

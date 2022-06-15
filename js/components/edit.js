@@ -79,37 +79,43 @@ import {loadTable} from './mainForm.js';
   function showUserEditBox(id) {
     console.log(id);
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/users/"+id);
+    xhttp.open("GET", "http://localhost:8080/bachestpi2022/resources/objetoestado/findId?id="+id);
     xhttp.send();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         const objects = JSON.parse(this.responseText);
-        const user = objects;
+        const user = objects[0];
         console.log(user);
         Swal.fire({
           title: 'Edit User',
           html:
-            '<input id="id" class="swal2-input" placeholder="First" value="'+user['id']+'" disabled>' +
-            '<input id="name" class="swal2-input" placeholder="First" value="'+user['name']+'">',
+          '<input id="idEstado" value="'+user.idEstado['idEstado']+'" class="swal2-input" placeholder="1,2,3">' +
+          '<input id="idObjeto" value="'+user.idObjeto['idObjeto']+'" class="swal2-input" placeholder="1,2,3">' +
+          '<input id="actual" value="'+user['actual']+'" class="swal2-input" placeholder="true">' +
+          '<input id="fechaAlcanzado" value="'+user['fechaAlcanzado']+'" class="swal2-input" placeholder="01061999">' +
+          '<input id="observaciones" value="'+user['observaciones']+'" class="swal2-input" placeholder="ya no esta">' ,
           focusConfirm: false,
           preConfirm: () => {
-            userEdit();
+            userEdit(id);
           }
         })
       }
     };
   }
   
-  function userEdit() {
-    const id = document.getElementById("id").value;
-    const name = document.getElementById("name").value;
+  function userEdit(id) {
+    const idEstado = document.getElementById("idEstado").value;
+    const idObjeto = document.getElementById("idObjeto").value;
+    const actual = document.getElementById("actual").value;
+    const fecha = document.getElementById("fechaAlcanzado").value;
+    const observaciones = document.getElementById("observaciones").value;
 
       
     const xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "https://62a3ee1f259aba8e10dfb62b.mockapi.io/users/"+id);
+    xhttp.open("PUT", "http://localhost:8080/bachestpi2022/resources/objetoestado");
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send(JSON.stringify({ 
-      "id": id, "name": name
+      "idObjetoEstado": id, "idEstado": {"idEstado":idEstado}, "idObjeto":{"idObjeto":idObjeto}, "actual":actual, "fechaAlcanzado":fecha, "observaciones":observaciones
     }));
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
