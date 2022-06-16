@@ -77,7 +77,7 @@ window.customElements.define('my-button-edit', ButtonEdit);
 import {loadTable} from './mainForm.js';
   
   function showUserEditBox(id) {
-    console.log(id);
+    
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", "http://localhost:8080/bachestpi2022/resources/estado/findId?id="+id);
     xhttp.send();
@@ -85,7 +85,7 @@ import {loadTable} from './mainForm.js';
       if (this.readyState == 4 && this.status == 200) {
         const objects = JSON.parse(this.responseText);
         const user = objects[0];
-        console.log(user);
+       
         Swal.fire({
           title: 'Edit User',
           html:
@@ -117,8 +117,8 @@ import {loadTable} from './mainForm.js';
     xhttp.onreadystatechange = function() {
       if ((this.status >= 200 && this.status<300) ){
         //const objects = JSON.parse(this.responseText);
-        console.log("editado");
-        //Swal.fire(objects['message']);
+        
+        Swal.fire('Editado');
         
         loadTable();
       }else{

@@ -75,7 +75,7 @@ export class litAutocomplete extends LitElement {
       loadTable();
       this.lista('');
     } else {
-      console.log("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value);
+      
       obtenerJSON("http://localhost:8080/bachestpi2022/resources/tipoobjeto/findId?id=" + busqueda.value)
         .then((json) => {
           console.log("el json de respuesta es:", json);
@@ -91,7 +91,7 @@ export class litAutocomplete extends LitElement {
         .catch((err) => {
           console.log("Error encontrado:", err);
         });
-        console.log("fuera del json");
+        
            
   
       //this.open();
@@ -242,7 +242,6 @@ export class litAutocomplete extends LitElement {
         if (busqueda.value === "") {
           loadTable();
         } else {
-          console.log("https://62a3ee1f259aba8e10dfb62b.mockapi.io/estado/" + busqueda.value);
           obtenerJSON("http://localhost:8080/bachestpi2022/resources/tipoobjeto/findId?id=" + busqueda.value)
             .then((json) => {
               console.log("el json de respuesta es:", json);
@@ -258,7 +257,7 @@ export class litAutocomplete extends LitElement {
             .catch((err) => {
               console.log("Error encontrado:", err);
             });
-            console.log("fuera del json");
+            
                
       
           //this.open();
@@ -269,10 +268,10 @@ export class litAutocomplete extends LitElement {
         //this.close();
         break;
       case "ArrowLeft":
-          console.log("izquierda");
+          
           break;
       case "ArrowRight":
-          console.log("derecha");
+         
           break;
       default:
         this.cargar();

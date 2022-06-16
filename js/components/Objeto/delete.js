@@ -44,7 +44,7 @@ class ButtonDel extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true));
     this.$button = this._shadowRoot.querySelector('button');
     this.$button.addEventListener('click', () => {
-        console.log(this.valueid);
+      
         userDelete(this.valueid);
         
         
@@ -85,9 +85,9 @@ function userDelete(id) {
     xhttp.onreadystatechange = function() {
       if ((this.status >= 200 && this.status<300) ){
         //const objects = JSON.parse(this.responseText);
-        console.log("eliminado");
+        
         loadTable();
-        //Swal.fire(objects['message']);
+        Swal.fire("Eliminado");
       }  else{
         Swal.fire("El objeto que desea eliminar esta ligado a la tabla de objetoestado");
       }

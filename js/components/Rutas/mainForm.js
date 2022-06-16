@@ -26,7 +26,7 @@ class formularioInicial extends HTMLElement {
           var trHTML = ''; 
         
           const objects = JSON.parse(this.responseText);
-          console.log(objects);
+          
           for (let object of objects) {
             //const test = JSON.parse();
             //console.log();
@@ -52,7 +52,7 @@ class formularioInicial extends HTMLElement {
       //console.log(objects);
       for (let object of objects) {
         //const test = JSON.parse();
-        console.log(object);
+       
         // cambiar para nuestra api
             trHTML += '<tr>'; 
             trHTML += '<td>'+object['idRuta']+'</td>';
