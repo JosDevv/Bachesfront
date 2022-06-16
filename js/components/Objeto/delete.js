@@ -79,17 +79,18 @@ window.customElements.define('my-button-del', ButtonDel);
 import {loadTable} from './mainForm.js';
 function userDelete(id) {
     const xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "http://localhost:8080/bachestpi2022/resources/objetoestado/"+id);
+    xhttp.open("DELETE", "http://localhost:8080/bachestpi2022/resources/objeto/"+id);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send();
     xhttp.onreadystatechange = function() {
-      if (this.readyState == 4) {
+      if ((this.status >= 200 && this.status<300) ){
         //const objects = JSON.parse(this.responseText);
         console.log("eliminado");
         loadTable();
         //Swal.fire(objects['message']);
-        
-      } 
+      }  else{
+        Swal.fire("El objeto que desea eliminar esta ligado a la tabla de objetoestado");
+      }
     };
   }
  

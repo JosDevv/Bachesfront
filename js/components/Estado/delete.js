@@ -83,13 +83,15 @@ function userDelete(id) {
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send();
     xhttp.onreadystatechange = function() {
-      if (this.readyState == 4) {
+      if ((this.status >= 200 && this.status<300) ){
         //const objects = JSON.parse(this.responseText);
         console.log("eliminado");
         loadTable();
         //Swal.fire(objects['message']);
         
-      } 
+      }  else{
+        Swal.fire("El Estado que desea eliminar esta ligado a la tabla de objeto estado");
+      }
     };
   }
  
