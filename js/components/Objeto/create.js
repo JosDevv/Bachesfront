@@ -72,7 +72,7 @@ import {loadTable} from './mainForm.js';
       html:
         
         
-        '<input id="idTipoObjeto" class="swal2-input" placeholder="1,2,3">' +
+        '<input id="idTipoObjeto" class="swal2-input" placeholder="idTipoObjeto">' +
         '<input id="longitud" class="swal2-input" placeholder="90.123132">' +
         '<input id="latitud" class="swal2-input" placeholder="50.123132">' +
         '<input id="nombre" class="swal2-input" placeholder="nombre">' +
@@ -103,11 +103,13 @@ import {loadTable} from './mainForm.js';
     
     xhttp.onreadystatechange = function() {
       console.log("hasta aca todo bien");
-      
-        
+      if (this.readyState==4 && (this.status >= 200 && this.status<300) ){
         console.log("agregado");
         Swal.fire("agregado ");
         loadTable();
+      }else{
+        Swal.fire("Por favor verifique la dependencia de tipoobjeto si existe");
+      }
       
     };
   }

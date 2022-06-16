@@ -72,7 +72,7 @@ import {loadTable} from './mainForm.js';
       html:
         
         
-        '<input id="nombre" class="swal2-input" placeholder="ALgun nombre">' +
+        '<input id="nombre" class="swal2-input" placeholder="Algun nombre">' +
         '<input id="fechaCreacion" class="swal2-input" placeholder="01061999">' +
         '<input id="observaciones" class="swal2-input" placeholder="ya no esta">' ,
       focusConfirm: false,
@@ -100,10 +100,13 @@ import {loadTable} from './mainForm.js';
     xhttp.onreadystatechange = function() {
       console.log("hasta aca todo bien");
       
-        
+      if (this.readyState==4 && (this.status >= 200 && this.status<300) ){
         console.log("agregado");
         Swal.fire("agregado ");
         loadTable();
+      }else{
+        Swal.fire("A ocurrido un error");
+      }
       
     };
   }
