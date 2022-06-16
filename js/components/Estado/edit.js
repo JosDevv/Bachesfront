@@ -115,12 +115,14 @@ import {loadTable} from './mainForm.js';
      "idEstado":id,"nombre":nombre, "fechaCreacion":fecha, "observaciones":observaciones
     }));
     xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
+      if ((this.status >= 200 && this.status<300) ){
         //const objects = JSON.parse(this.responseText);
         console.log("editado");
         //Swal.fire(objects['message']);
         
         loadTable();
+      }else{
+        Swal.fire("A ocurrido un error los cambios no se guardaron");
       }
     };
   }

@@ -109,23 +109,57 @@ import {loadTable} from './mainForm.js';
     const actual = document.getElementById("actual").value;
     const fecha = document.getElementById("fechaAlcanzado").value;
     const observaciones = document.getElementById("observaciones").value;
+    const veri = new XMLHttpRequest();
 
-      
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "http://localhost:8080/bachestpi2022/resources/objetoestado");
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send(JSON.stringify({ 
-      "idObjetoEstado": id, "idEstado": {"idEstado":idEstado}, "idObjeto":{"idObjeto":idObjeto}, "actual":actual, "fechaAlcanzado":fecha, "observaciones":observaciones
-    }));
-    xhttp.onreadystatechange = function() {
+    veri.open("GET", "http://localhost:8080/bachestpi2022/resources/estado/findId?id="+idEstado);
+    veri.send();
+    veri.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        //const objects = JSON.parse(this.responseText);
-        console.log("editado");
-        //Swal.fire(objects['message']);
+        const objects = JSON.parse(this.responseText);
         
-        loadTable();
-      }
-    };
+        if(objects.length == 0){
+          Swal.fire("Por favor verifique si la dependencia de Estado si existe");
+        }else{
+          const veri = new XMLHttpRequest();
+
+          veri.open("GET", "http://localhost:8080/bachestpi2022/resources/objeto/findId?id="+idObjeto);
+          veri.send();
+          veri.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              const objects = JSON.parse(this.responseText);
+              
+              if(objects.length == 0){
+                Swal.fire("Por favor verifique si la dependencia de Objeto si existe");
+              }else{
+                const xhttp = new XMLHttpRequest();
+                xhttp.open("PUT", "http://localhost:8080/bachestpi2022/resources/objetoestado");
+                xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhttp.send(JSON.stringify({ 
+                  "idObjetoEstado": id, "idEstado": {"idEstado":idEstado}, "idObjeto":{"idObjeto":idObjeto}, "actual":actual, "fechaAlcanzado":fecha, "observaciones":observaciones
+                }));
+                xhttp.onreadystatechange = function() {
+                  if (this.status == 200) {
+                    //const objects = JSON.parse(this.responseText);
+                    console.log("editado");
+                    //Swal.fire(objects['message']);
+                    
+                    loadTable();
+                  }else{
+                    Swal.fire("Error en insercion de datos");
+                  }
+                };
+              }
+            }}
+
+
+
+
+        }
+    }
+  }
+
+
+
   }
   
   

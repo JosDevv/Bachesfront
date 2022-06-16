@@ -109,23 +109,41 @@ import {loadTable} from './mainForm.js';
     const longitud = document.getElementById("longitud").value;
     const nombre = document.getElementById("nombre").value;
     const observaciones = document.getElementById("observaciones").value;
-
-      
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "http://localhost:8080/bachestpi2022/resources/objeto");
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send(JSON.stringify({ 
-      "idObjeto": id, "idTipoObjeto": {"idTipoObjeto":idTipoObjeto}, "latitud":latitud, "longitud":longitud, "nombre":nombre,"observaciones":observaciones
-    }));
-    xhttp.onreadystatechange = function() {
+    const veri = new XMLHttpRequest();
+    
+    veri.open("GET", "http://localhost:8080/bachestpi2022/resources/tipoobjeto/findId?id="+idTipoObjeto);
+    veri.send();
+    veri.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        //const objects = JSON.parse(this.responseText);
-        console.log("editado");
-        //Swal.fire(objects['message']);
+        const objects = JSON.parse(this.responseText);
         
-        loadTable();
+        if(objects.length == 0){
+          Swal.fire("Por favor verifique si la dependencia de TipoObjeto si existe");
+        }else{
+          const xhttp = new XMLHttpRequest();
+          xhttp.open("PUT", "http://localhost:8080/bachestpi2022/resources/objeto");
+          xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+          xhttp.send(JSON.stringify({ 
+            "idObjeto": id, "idTipoObjeto": {"idTipoObjeto":idTipoObjeto}, "latitud":latitud, "longitud":longitud, "nombre":nombre,"observaciones":observaciones
+          }));
+          xhttp.onreadystatechange = function() {
+            
+            if ((this.status >= 200 && this.status<300) ){
+              //const objects = JSON.parse(this.responseText);
+              console.log("editado");
+              //Swal.fire(objects['message']);
+              loadTable();
+            }else{
+              Swal.fire("Error en la insercion de datos objeto");
+            }
+          };
+          }
       }
-    };
+
+    }
+
+
+
   }
   
   
